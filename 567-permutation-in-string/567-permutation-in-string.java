@@ -1,66 +1,19 @@
-class Solution {
-
-    public boolean checkInclusion(String s1, String s2) {
-        if (s2.length() < s1.length()) return false;
-        int[] arr = new int[26];
-        //add the values to the hash array
-        for (int i = 0; i < s1.length(); i++) {
-            arr[s1.charAt(i) - 'a']++;
-        }
-        int i = 0;
-        int j = 0;
-        //point j to it's position
-        for (; j < s1.length(); j++) {
-            arr[s2.charAt(j) - 'a']--;
-        }
-        j--;
-        if (isEmpty(arr)) return true;
-        while (j < s2.length()) {
-            arr[s2.charAt(i) - 'a']++;
-            i++;
-            j++;
-            if (j < s2.length()) arr[s2.charAt(j) - 'a']--;
-            if (isEmpty(arr)) return true;
-        }
-        return isEmpty(arr);
+			   class Solution {
+public boolean checkInclusion(String s1, String s2) {
+    HashMap<Character,Integer> map = new HashMap<>();
+    int ls1 = s1.length(),ls2 = s2.length();
+    for(int i=0;i<ls1;i++){
+        map.put(s1.charAt(i),map.getOrDefault(s1.charAt(i),0)+1);
     }
-
-    public boolean isEmpty(int[] arr) {
-        for (int i = 0; i < arr.length; i++) {
-            if (arr[i] != 0) return false;
+    for(int i=0;i<=ls2-ls1;i++){
+        String str = s2.substring(i,i+ls1);
+        HashMap<Character,Integer> maps2 = new HashMap<>();
+        for(int j=0;j<ls1;j++){                
+            maps2.put(str.charAt(j),maps2.getOrDefault(str.charAt(j),0)+1);
         }
-        return true;
+        if(map.equals(maps2)) return true;            
     }
+    return false;
+    
+ }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
